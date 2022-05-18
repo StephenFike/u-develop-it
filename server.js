@@ -118,6 +118,7 @@ app.post('/api/candidate', ({ body }, res) =>{
     });
 });
 
+// get all parties
 app.get('/api/parties', (req, res) => {
     const sql = `SELECT * FROM PARTIES`;
 
@@ -133,6 +134,7 @@ app.get('/api/parties', (req, res) => {
     });
 });
 
+// get specific party by id
 app.get('/api/party/:id', (req, res) => {
     const sql = `SELECT * FROM parties WHERE id = ?`;
     const params = [req.params.id];
@@ -149,6 +151,7 @@ app.get('/api/party/:id', (req, res) => {
     });
 });
 
+// delete a party
 app.delete('/api/party/:id', (req, res) => {
     const sql = `DELETE FROM parties WHERE id = ?`;
     const params = [req.params.id];
@@ -156,6 +159,7 @@ app.delete('/api/party/:id', (req, res) => {
     db.query(sql, params, (err, result) => {
         if (err) {
             res.status(400).json({ error: err.message });
+            // checks if anything was deleted
         } else if (!result.affectedRows) {
             res.json({
                 message: 'Party not found'
@@ -170,8 +174,9 @@ app.delete('/api/party/:id', (req, res) => {
     });
 });
 
+// update a candidates party
 app.put('/api/candidate/:id', (req, res) => {
-
+    
     const errors = inputCheck(req.body, 'party_id');
     if (errors) {
         res.status(400).json({ error: errors });
