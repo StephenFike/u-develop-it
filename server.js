@@ -9,11 +9,8 @@ const app = express();
 // express middleware
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
+
 app.use('/api', apiRoutes);
-
-
-
-
 
 // Default response for any Not Found content
 app.use((req, res) => {
